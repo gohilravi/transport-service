@@ -21,7 +21,7 @@ public class TransportService : ITransportService
         _publishEndpoint = publishEndpoint;
     }
 
-    public async Task<CreateTransportResponse> CreateTransportAsync(CreateTransportRequest request, string elasticSearchId)
+    public async Task<CreateTransportResponse> CreateTransportAsync(CreateTransportRequest request)
     {
         try
         {
@@ -37,7 +37,7 @@ public class TransportService : ITransportService
             // Publish to Elasticsearch sync command
             var syncCommand = new SyncRecordInElasticSearch
             {
-                ElasticSearchId = elasticSearchId,
+                ElasticSearchId = request.OfferId.ToString(),
                 ObjectType = "Transport",
                 Operation = "Create",
                 Payload = JsonConvert.SerializeObject(new
@@ -66,7 +66,7 @@ public class TransportService : ITransportService
         }
     }
 
-    public async Task UpdateTransportStatusAsync(int id, string status, string elasticSearchId)
+    public async Task UpdateTransportStatusAsync(int id, string status)
     {
         try
         {
@@ -86,7 +86,7 @@ public class TransportService : ITransportService
             // Publish to Elasticsearch sync command
             var syncCommand = new SyncRecordInElasticSearch
             {
-                ElasticSearchId = elasticSearchId,
+                ElasticSearchId = transport.OfferId.ToString(),
                 ObjectType = "Transport",
                 Operation = "Update",
                 Payload = JsonConvert.SerializeObject(new

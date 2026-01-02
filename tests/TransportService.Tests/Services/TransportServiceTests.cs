@@ -59,7 +59,7 @@ public class TransportServiceTests
         _mockUnitOfWork.Setup(u => u.CommitTransactionAsync()).Returns(Task.CompletedTask);
 
         // Act
-        var result = await _service.CreateTransportAsync(request, "elastic-123");
+        var result = await _service.CreateTransportAsync(request);
 
         // Assert
         result.Should().NotBeNull();
@@ -80,7 +80,7 @@ public class TransportServiceTests
         _mockUnitOfWork.Setup(u => u.RollbackTransactionAsync()).Returns(Task.CompletedTask);
 
         // Act & Assert
-        await _service.Invoking(s => s.CreateTransportAsync(request, "elastic-123"))
+        await _service.Invoking(s => s.CreateTransportAsync(request))
             .Should().ThrowAsync<Exception>()
             .WithMessage("Mapping error");
 
@@ -101,7 +101,7 @@ public class TransportServiceTests
         _mockUnitOfWork.Setup(u => u.CommitTransactionAsync()).Returns(Task.CompletedTask);
 
         // Act
-        await _service.UpdateTransportStatusAsync(1, "InTransit", "elastic-456");
+        await _service.UpdateTransportStatusAsync(1, "InTransit");
 
         // Assert
         _mockUnitOfWork.Verify(u => u.BeginTransactionAsync(), Times.Once);
@@ -118,7 +118,7 @@ public class TransportServiceTests
         _mockUnitOfWork.Setup(u => u.RollbackTransactionAsync()).Returns(Task.CompletedTask);
 
         // Act & Assert
-        await _service.Invoking(s => s.UpdateTransportStatusAsync(999, "InTransit", "elastic-456"))
+        await _service.Invoking(s => s.UpdateTransportStatusAsync(999, "InTransit"))
             .Should().ThrowAsync<ArgumentException>()
             .WithMessage("Transport with ID 999 not found.");
 

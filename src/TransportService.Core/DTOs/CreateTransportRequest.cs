@@ -2,7 +2,6 @@ namespace TransportService.Core.DTOs;
 
 public class CreateTransportRequest
 {
-    public string ElasticSearchId { get; set; } = string.Empty;
     public int OfferId { get; set; }
     public int PurchaseId { get; set; }
     public int SellerId { get; set; }

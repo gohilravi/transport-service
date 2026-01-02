@@ -51,7 +51,7 @@ public class TransportControllerTests
         _mockCreateValidator.Setup(v => v.ValidateAsync(It.IsAny<CreateTransportRequest>(), default))
             .ReturnsAsync(new ValidationResult());
         
-        _mockTransportService.Setup(s => s.CreateTransportAsync(It.IsAny<CreateTransportRequest>(), It.IsAny<string>()))
+        _mockTransportService.Setup(s => s.CreateTransportAsync(It.IsAny<CreateTransportRequest>()))
             .ReturnsAsync(transportResponse);
 
         // Act
@@ -111,7 +111,7 @@ public class TransportControllerTests
         _mockCreateValidator.Setup(v => v.ValidateAsync(It.IsAny<CreateTransportRequest>(), default))
             .ReturnsAsync(new ValidationResult());
         
-        _mockTransportService.Setup(s => s.CreateTransportAsync(It.IsAny<CreateTransportRequest>(), It.IsAny<string>()))
+        _mockTransportService.Setup(s => s.CreateTransportAsync(It.IsAny<CreateTransportRequest>()))
             .ThrowsAsync(new Exception("Database error"));
 
         // Act
@@ -131,7 +131,7 @@ public class TransportControllerTests
         _mockUpdateValidator.Setup(v => v.ValidateAsync(It.IsAny<UpdateTransportStatusRequest>(), default))
             .ReturnsAsync(new ValidationResult());
         
-        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(1, "InTransit", It.IsAny<string>()))
+        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(1, "InTransit"))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -171,7 +171,7 @@ public class TransportControllerTests
         _mockUpdateValidator.Setup(v => v.ValidateAsync(It.IsAny<UpdateTransportStatusRequest>(), default))
             .ReturnsAsync(new ValidationResult());
         
-        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(999, "InTransit", It.IsAny<string>()))
+        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(999, "InTransit"))
             .ThrowsAsync(new ArgumentException("Transport with ID 999 not found."));
 
         // Act
@@ -190,7 +190,7 @@ public class TransportControllerTests
         _mockUpdateValidator.Setup(v => v.ValidateAsync(It.IsAny<UpdateTransportStatusRequest>(), default))
             .ReturnsAsync(new ValidationResult());
         
-        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(1, "InTransit", It.IsAny<string>()))
+        _mockTransportService.Setup(s => s.UpdateTransportStatusAsync(1, "InTransit"))
             .ThrowsAsync(new Exception("Database error"));
 
         // Act

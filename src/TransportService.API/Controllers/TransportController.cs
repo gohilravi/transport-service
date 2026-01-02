@@ -42,7 +42,7 @@ public class TransportController : ControllerBase
                 return BadRequest(validationResult.Errors.Select(e => new { Field = e.PropertyName, Error = e.ErrorMessage }));
             }
 
-            var transport = await _transportService.CreateTransportAsync(request, request.ElasticSearchId);
+            var transport = await _transportService.CreateTransportAsync(request);
             return CreatedAtRoute(null, new { id = transport.Id }, transport);
         }
         catch (Exception ex)
@@ -72,7 +72,7 @@ public class TransportController : ControllerBase
                 return BadRequest(validationResult.Errors.Select(e => new { Field = e.PropertyName, Error = e.ErrorMessage }));
             }
 
-            await _transportService.UpdateTransportStatusAsync(id, request.Status, request.ElasticSearchId);
+            await _transportService.UpdateTransportStatusAsync(id, request.Status);
             return Ok();
         }
         catch (ArgumentException ex)

@@ -10,12 +10,6 @@ public class CreateTransportRequestValidator : AbstractValidator<CreateTransport
         ClassLevelCascadeMode = CascadeMode.Stop;
         RuleLevelCascadeMode = CascadeMode.Stop;
 
-        RuleFor(x => x.ElasticSearchId)
-            .NotEmpty()
-            .WithMessage("ElasticSearchId is required")
-            .MaximumLength(50)
-            .WithMessage("ElasticSearchId must not exceed 50 characters");
-
         RuleFor(x => x.OfferId)
             .GreaterThan(0)
             .WithMessage("OfferId must be greater than 0");

@@ -20,7 +20,6 @@ public class CreateTransportRequestValidatorTests
         // Arrange
         var request = new CreateTransportRequest
         {
-            ElasticSearchId = "test-elastic-id",
             OfferId = 1,
             PurchaseId = 1,
             SellerId = 1,
@@ -51,7 +50,6 @@ public class CreateTransportRequestValidatorTests
         // Arrange
         var request = new CreateTransportRequest
         {
-            ElasticSearchId = "test-elastic-id",
             OfferId = offerId,
             PurchaseId = 1,
             SellerId = 1,
@@ -84,7 +82,6 @@ public class CreateTransportRequestValidatorTests
         // Arrange
         var request = new CreateTransportRequest
         {
-            ElasticSearchId = "test-elastic-id",
             OfferId = 1,
             PurchaseId = 1,
             SellerId = 1,
@@ -113,7 +110,6 @@ public class CreateTransportRequestValidatorTests
         // Arrange
         var request = new CreateTransportRequest
         {
-            ElasticSearchId = "test-elastic-id",
             OfferId = 1,
             PurchaseId = 1,
             SellerId = 1,
@@ -150,7 +146,7 @@ public class UpdateTransportStatusRequestValidatorTests
     public void Validate_WithValidStatus_ReturnsValid()
     {
         // Arrange
-        var request = new UpdateTransportStatusRequest { ElasticSearchId = "test-elastic-id", Status = "InTransit" };
+        var request = new UpdateTransportStatusRequest { Status = "InTransit" };
 
         // Act
         var result = _validator.Validate(request);
@@ -165,7 +161,7 @@ public class UpdateTransportStatusRequestValidatorTests
     public void Validate_WithEmptyStatus_ReturnsInvalid(string status, string expectedError)
     {
         // Arrange
-        var request = new UpdateTransportStatusRequest { ElasticSearchId = "test-elastic-id", Status = status };
+        var request = new UpdateTransportStatusRequest { Status = status };
 
         // Act
         var result = _validator.Validate(request);
@@ -179,7 +175,7 @@ public class UpdateTransportStatusRequestValidatorTests
     public void Validate_WithTooLongStatus_ReturnsInvalid()
     {
         // Arrange
-        var request = new UpdateTransportStatusRequest { ElasticSearchId = "test-elastic-id", Status = new string('A', 31) }; // 31 characters
+        var request = new UpdateTransportStatusRequest { Status = new string('A', 31) }; // 31 characters
 
         // Act
         var result = _validator.Validate(request);

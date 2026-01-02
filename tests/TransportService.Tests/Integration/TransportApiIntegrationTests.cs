@@ -47,7 +47,6 @@ public class TransportApiIntegrationTests : IClassFixture<WebApplicationFactory<
         var request = new CreateTransportRequest
         {
             // Missing required fields
-            ElasticSearchId = "test-elastic-id",
             OfferId = 0,
             SellerZipCode = "invalid",
             BuyerZipCode = "invalid"
@@ -66,7 +65,6 @@ public class TransportApiIntegrationTests : IClassFixture<WebApplicationFactory<
         // Arrange
         var updateRequest = new UpdateTransportStatusRequest
         {
-            ElasticSearchId = "test-elastic-id",
             Status = ""
         };
 

@@ -4,6 +4,7 @@ public class Transport
 {
     public int Id { get; set; }
     public int CarrierId { get; set; }
+    public int OfferId { get; set; }
     public int PurchaseId { get; set; }
     public string PickupLocation { get; set; } = string.Empty;
     public string DeliveryLocation { get; set; } = string.Empty;
