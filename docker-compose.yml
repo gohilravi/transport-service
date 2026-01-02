@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: transport-service-db
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Password123"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - transport-network
+
+  transport-api:
+    build:
+      context: .
+      dockerfile: src/TransportService.API/Dockerfile
+    container_name: transport-service-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=TransportServiceDb;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=true;"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - sqlserver
+    networks:
+      - transport-network
+
+volumes:
+  sqlserver_data:
+
+networks:
+  transport-network:
+    driver: bridge
