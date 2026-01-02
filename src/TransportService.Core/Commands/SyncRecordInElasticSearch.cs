@@ -1,5 +1,8 @@
+using MassTransit;
+
 namespace TransportService.Core.Commands;
 
+[EntityName("SyncRecordInElasticSearch")]
 public class SyncRecordInElasticSearch
 {
     public string ElasticSearchId { get; set; } = string.Empty;
