@@ -7,6 +7,9 @@ public class CreateTransportRequestValidator : AbstractValidator<CreateTransport
 {
     public CreateTransportRequestValidator()
     {
+        ClassLevelCascadeMode = CascadeMode.Stop;
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.ElasticSearchId)
             .NotEmpty()
             .WithMessage("ElasticSearchId is required")

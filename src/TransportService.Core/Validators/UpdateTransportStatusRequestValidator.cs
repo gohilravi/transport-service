@@ -7,6 +7,9 @@ public class UpdateTransportStatusRequestValidator : AbstractValidator<UpdateTra
 {
     public UpdateTransportStatusRequestValidator()
     {
+        ClassLevelCascadeMode = CascadeMode.Stop;
+        RuleLevelCascadeMode = CascadeMode.Stop;
+
         RuleFor(x => x.ElasticSearchId)
             .NotEmpty()
             .WithMessage("ElasticSearchId is required")
