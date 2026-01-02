@@ -30,7 +30,7 @@ public class Program
 
         // Add database context
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         // Add custom services
         builder.Services.AddApplicationServices();

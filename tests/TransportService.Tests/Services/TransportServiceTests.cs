@@ -6,6 +6,7 @@ using TransportService.Core.DTOs;
 using TransportService.Core.Entities;
 using TransportService.Core.Interfaces;
 using TransportService.Infrastructure.Services;
+using MassTransit;
 
 namespace TransportService.Tests.Services;
 

@@ -112,4 +112,43 @@ public class TransportService : ITransportService
             throw;
         }
     }
+
+    public async Task DeleteTransportAsync(int id, string elasticSearchId)
+    {
+        await _unitOfWork.BeginTransactionAsync();
+
+        try
+        {
+            var transport = await _unitOfWork.Transports.GetByIdAsync(id);
+            if (transport == null)
+            {
+                throw new ArgumentException($"Transport with ID {id} not found.");
+            }
+
+            // Cascade delete logic - delete related records first
+            // Example: Delete related transport items, logs, etc.
+            // await _unitOfWork.TransportItems.DeleteByTransportIdAsync(id);
+            // await _unitOfWork.TransportLogs.DeleteByTransportIdAsync(id);
+
+            await _unitOfWork.Transports.DeleteAsync(id);
+            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.CommitTransactionAsync();
+
+            // Publish to Elasticsearch sync command
+            var syncCommand = new SyncRecordInElasticSearch
+            {
+                ElasticSearchId = elasticSearchId,
+                ObjectType = "Transport",
+                Operation = "Delete",
+                Payload = JsonConvert.SerializeObject(new { Id = id })
+            };
+
+            await _publishEndpoint.Publish(syncCommand);
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync();
+            throw;
+        }
+    }
 }

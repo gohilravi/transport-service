@@ -35,4 +35,14 @@ public class TransportRepository : ITransportRepository
         _context.Entry(transport).State = EntityState.Modified;
         return Task.FromResult(transport);
     }
+
+    public async Task DeleteAsync(int id)
+    {
+        var transport = await _context.Transports.FindAsync(id);
+        if (transport != null)
+        {
+            _context.Transports.Remove(transport);
+            // Entity Framework will handle cascade deletes based on configuration
+        }
+    }
 }

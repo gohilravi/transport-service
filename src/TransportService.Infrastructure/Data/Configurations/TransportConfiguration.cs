@@ -8,7 +8,7 @@ public class TransportConfiguration : IEntityTypeConfiguration<Transport>
 {
     public void Configure(EntityTypeBuilder<Transport> builder)
     {
-        builder.ToTable("Transports");
+        builder.ToTable("Transport");
 
         builder.HasKey(t => t.Id);
 
@@ -52,6 +52,13 @@ public class TransportConfiguration : IEntityTypeConfiguration<Transport>
         builder.HasIndex(t => t.PurchaseId);
         builder.HasIndex(t => t.Status);
         builder.HasIndex(t => t.ScheduleDate);
+
+        // Configure cascade delete behavior for future related entities
+        // Example: if Transport has related entities like TransportItems
+        // builder.HasMany(t => t.TransportItems)
+        //     .WithOne(ti => ti.Transport)
+        //     .HasForeignKey(ti => ti.TransportId)
+        //     .OnDelete(DeleteBehavior.Cascade);
 
         // Configure table with check constraint
         builder.ToTable(t => t.HasCheckConstraint(

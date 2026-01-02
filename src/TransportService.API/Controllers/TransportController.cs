@@ -84,4 +84,36 @@ public class TransportController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "An error occurred while updating the transport status.", Details = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Deletes a transport and all related records (cascade delete)
+    /// </summary>
+    /// <param name="id">Transport ID</param>
+    /// <param name="elasticSearchId">Elasticsearch ID for sync</param>
+    /// <returns>No content on success</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeleteTransport(int id, [FromQuery] string elasticSearchId)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(elasticSearchId))
+            {
+                return BadRequest(new { Error = "ElasticSearchId is required." });
+            }
+
+            await _transportService.DeleteTransportAsync(id, elasticSearchId);
+            return NoContent();
+        }
+        catch (ArgumentException ex)
+        {
+            return NotFound(new { Error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "An error occurred while deleting the transport.", Details = ex.Message });
+        }
+    }
 }
